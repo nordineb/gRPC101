@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package api.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "https://github.com/nordineb/gRPC101/api/v1";
+
+
+service BookService {
+    rpc CreateCandidate(CreateCandidateRequest) returns (CreateCandidateResponse) {};
+    rpc RetrieveCandidate(RetrieveCandidateRequest) returns (RetrieveCandidateResponse) {};
+    rpc UpdateCandidate(UpdateCandidateRequest) returns (UpdateCandidateResponse) {};
+    rpc DeleteCandidate(DeleteCandidateRequest) returns (DeleteCandidateResponse) {};
+    rpc ListCandidate(ListCandidateRequest) returns (ListCandidateResponse) {};
+}
+
+message Book {
+    int64 bid = 1;
+    string title = 2;
+    string author = 3;
+    string description = 4;
+    string language = 8;
+    google.protobuf.Timestamp finish_time = 9;
+}
+
+message Candidate {
+    int64 cid = 1;
+    string firstname = 2;
+    string lastname = 3;
+    string email = 4;
+  
+    enum Cloud {
+      none = 0;
+      aws = 1;
+      gcp = 2;
+      azure = 3;
+    }
+  
+    Cloud cloudexpertise = 5;
+  
+    google.protobuf.Timestamp last_updated = 6;
+  }
+
+
+
+message CreateCandidateRequest {
+    Candidate candidate = 1;
+}
+
+message CreateCandidateResponse {
+    int64 cid = 1; 
+}
+
+message RetrieveCandidateRequest {
+    int64 cid = 1;
+}
+
+message RetrieveCandidateResponse {
+    Candidate candidate = 1;
+}
+
+message UpdateCandidateRequest {
+    Candidate candidate = 1;
+}
+
+message UpdateCandidateResponse {
+}
+
+message DeleteCandidateRequest {
+    int64 cid = 1;
+}
+
+message DeleteCandidateResponse {
+}
+
+message ListCandidateRequest {
+    int64 offset = 1;
+    int64 limit = 2;
+}
+message ListCandidateResponse {
+    repeated Candidate Candidate = 1;
+}
